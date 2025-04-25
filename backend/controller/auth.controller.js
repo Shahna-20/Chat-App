@@ -55,7 +55,7 @@ export const login = async(req, res, next) => {
       const validUser = await User.findOne({email})
 
       if (!validUser) {
-         return next(errorHandler(400, "User not found"))
+         return next(errorHandler(404, "User not found"))
       }
 
       const validPassword = bcryptjs.compareSync(password, validUser.password)
@@ -77,4 +77,14 @@ export const login = async(req, res, next) => {
    }
 }
 
-export const logout = (req, res) => {}
+export const logout = (req, res, next) => {
+   try {
+      res.clearCookie("access_token")
+
+      res.status(200).json({
+         message: "User has been logged out successfully!",
+      })
+   } catch (error) {
+      next(error)
+   }
+}
