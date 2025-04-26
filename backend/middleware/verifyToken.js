@@ -9,7 +9,7 @@ export const isAuthenticate = async (req , res , next) => {
             return next(errorHandler(401, "Unauthorized"))
         }
 
-   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+   jwt.verify(token,process.env.JWT_SECRET, (err, user) => {
     if(err){
         return next(errorHandler(403, "Forbidden"))
     }
